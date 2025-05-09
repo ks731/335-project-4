@@ -13,6 +13,7 @@ using Neighbors = std::unordered_set<Vertex>;
 using Graph = std::unordered_map<Vertex, Neighbors>;
 
 
+
 namespace VertexCover {
 /**
  * @brief Generates a sub-optimal minimumum vertex cover
@@ -27,4 +28,16 @@ namespace VertexCover {
  * that forms a vertex cover of the graph.
  */
 std::unordered_set<Vertex> cover_graph(Graph g);
+
+/**
+* @brief Reads the contents of a flight table
+* as specified by the filename, into an undirected
+* Graph.
+* 
+* @param filename (a const. string reference) The filename of the file to be read 
+* @return (Graph) The resultant Graph object described by the file's contents.
+*
+* @throws (std::runtime_error) If the file cannot be opened for some reason (eg. using fin.fail())
+*/
+Graph readFromFile(const std::string& filename); 
 }
