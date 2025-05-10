@@ -14,6 +14,9 @@ namespace VertexCover{
 
         std::string line;
         while(std::getline(file,line)){
+            if (line.find_first_not_of(" \t") == std::string::npos) {
+                continue;
+            }
             std::istringstream iss(line);
             std::string source, destination;
             
