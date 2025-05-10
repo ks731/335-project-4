@@ -3,28 +3,33 @@
 #include <sstream>
 
 namespace VertexCover{
-
-    Graph readFromFile(const std::string& filename){
-        Graph graph;
-        std::ifstream file(filename);
-
-        if(!file.is_open()){
+    Graph readFromFile(const std::string& filename) {
+        Graph graph;  
+        std::ifstream file(filename);  
+    
+        if (!file.is_open()) {  
             throw std::runtime_error("Could not open file");
         }
-
+    
         std::string line;
-        while(std::getline(file,line)){
-            if (line.find_first_not_of(" \t") == std::string::npos) {
-                continue;
-            }
-            std::istringstream iss(line);
-            std::string source, destination;
-            
-            if(iss >> source >> destination){
-                graph[source].insert(destination);
-                graph[destination].insert(source);
-            }
+        while (std::getline(file, line)) {  
+            if (line.empty()) continue;
+    
+            size_t dep_start = line.find("- ") + 2;  
+            size_t dep_end = line.find(' ', dep_start);  
+            size_t dest_start = line.find("- ", dep_end) + 2;  
+            size_t dest_end = line.find(' ', dest_start);  
+    
+            std::string source = line.substr(dep_start, dep_end - dep_start);
+            std::string destination = line.substr(dest_start, dest_end - dest_start);
+    
+            source.erase(std::remove(source.begin(), source.end(), '|'), source.end());
+            destination.erase(std::remove(destination.begin(), destination.end(), '|'), destination.end());
+    
+            graph[source].insert(destination);
+            graph[destination].insert(source);
         }
+    
         return graph;
     }
 
