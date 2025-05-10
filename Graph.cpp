@@ -8,7 +8,7 @@ namespace VertexCover{
         Graph graph;
         std::ifstream file(filename);
 
-        if(file.fail()){
+        if(!file.is_open()){
             throw std::runtime_error("Could not open file");
         }
 
@@ -18,8 +18,6 @@ namespace VertexCover{
             std::string source, destination;
             
             if(iss >> source >> destination){
-                if(graph.find(source) == graph.end()){graph[source] = {};}
-                if(graph.find(destination) == graph.end()){graph[destination] = {};}
                 graph[source].insert(destination);
                 graph[destination].insert(source);
             }
