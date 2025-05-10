@@ -18,6 +18,8 @@ namespace VertexCover{
             std::string source, destination;
             
             if(iss >> source >> destination){
+                if(graph.find(source) == graph.end()){graph[source] = {};}
+                if(graph.find(destination) == graph.end()){graph[destination] = {};}
                 graph[source].insert(destination);
                 graph[destination].insert(source);
             }
